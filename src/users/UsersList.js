@@ -1,0 +1,36 @@
+import React from "react";
+import User from "./User";
+import Card from "../shared/Card";
+import "./Users.css";
+
+function UserList(props) {
+  if (props.elements.length == 0) {
+    return (
+      <div className="center">
+        <Card>
+          <h2>No Users Yet</h2>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <ul className="users-list">
+      {props.elements.map((user) => {
+        return (
+          <User
+            key={user.id}
+            id={user.id}
+            image={user.image}
+            name={user.name}
+            position={user.position}
+            team={user.team}
+            projects={user.projects}
+          />
+        );
+      })}
+    </ul>
+  );
+}
+
+export default UserList;
