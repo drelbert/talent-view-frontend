@@ -22,10 +22,11 @@ var TEMP_PROJECTS = [
   },
 ];
 const UserProjects = function () {
-  const id = useParams().id;
-  const loadedProjects = TEMP_PROJECTS.filter(
+  let id = useParams().id;
+  let loadedProjects = TEMP_PROJECTS.filter(
     (project) => project.creatorId === id
   );
+
   return (
     <div>
       <ProjectList elements={loadedProjects} />;

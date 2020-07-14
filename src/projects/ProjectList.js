@@ -1,6 +1,7 @@
 import React from "react";
 import ProjectItem from "./ProjectItem";
 import Card from "../shared/Card";
+import Button from "../shared/Button";
 import "./Projects.css";
 
 const ProjectList = function (props) {
@@ -9,7 +10,7 @@ const ProjectList = function (props) {
       <div className="project-list center">
         <Card>
           <h1>No Projects Yet</h1>
-          <button>CREATE</button>
+          <Button to="/projects">CREATE</Button>
         </Card>
       </div>
     );

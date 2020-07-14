@@ -133,14 +133,14 @@ main {
   }
 
   .nav-links button {
-    border: 1px solid white;
+    /* border: 1px solid white; */
     color: white;
     background: transparent;
   }
 
   .nav-links button:hover,
   .nav-links button:active {
-    background: #f8df00;
+    background: #f34343;
     color: #292929;
   }
 }

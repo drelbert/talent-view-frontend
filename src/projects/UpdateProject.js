@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "@reach/router";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
@@ -7,7 +7,9 @@ import {
   VALIDATOR_MINLENGTH,
 } from "../shared/utilities/validators";
 import { useForm } from "../shared/hooks/form";
+import Card from "../shared/Card";
 import "./Projects.css";
+import "../shared/Shared.css";
 
 var TEMP_PROJECTS = [
   {
@@ -48,19 +50,23 @@ const UpdateProject = function () {
 
   const projectToUpdate = TEMP_PROJECTS.find((p) => p.id === projectId);
 
-  setFormData(
-    {
-      description: {
-        value: projectToUpdate.description,
-        isValid: true,
-      },
-      lead: {
-        value: projectToUpdate.lead,
-        isValid: true,
-      },
-    },
-    true
-  );
+  useEffect(() => {
+    if (projectToUpdate) {
+      setFormData(
+        {
+          description: {
+            value: projectToUpdate.description,
+            isValid: true,
+          },
+          lead: {
+            value: projectToUpdate.lead,
+            isValid: true,
+          },
+        },
+        true
+      );
+    }
+  }, [setFormData, projectToUpdate]);
 
   const projectUpdateSubmitHandler = (event) => {
     event.preventDefault();
@@ -71,10 +77,21 @@ const UpdateProject = function () {
   if (!projectToUpdate) {
     return (
       <div className="center">
-        <h2>Project not found</h2>
+        <Card>
+          <h2>Project not found</h2>
+        </Card>
       </div>
     );
   }
+
+  if (!formState.inputs.description.value) {
+    return (
+      <div className="center">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
+
   return (
     <form className="project-form" onSubmit={projectUpdateSubmitHandler}>
       <Input
