@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Card from "../shared/Card";
+import { AuthContext } from "../shared/context/auth-context";
+import { useHttpClient } from "../shared/hooks/http-hook";
+import ErrorModal from "../shared/ErrorModal";
+import LoadingSpinner from "../shared/LoadingSpinner";
 import Button from "../shared/Button";
 import Modal from "../shared/Modal";
 import "./Projects.css";
 
 const ProjectItem = function (props) {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const showArchiveWarningHandler = () => {
@@ -15,14 +21,21 @@ const ProjectItem = function (props) {
     setShowConfirmModal(false);
   };
 
-  const confirmArchiveHandler = () => {
+  const confirmArchiveHandler = async () => {
     setShowConfirmModal(false);
-    // eslint-disable-next-line no-console
-    console.log("ARCHIVING...");
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/projects/${props.id}`,
+        "DELETE"
+      );
+      props.onDelete(props.id);
+      // eslint-disable-next-line no-empty
+    } catch (err) {}
   };
 
   return (
     <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showConfirmModal}
         onCancel={cancelArchiveHandler}
@@ -44,16 +57,21 @@ const ProjectItem = function (props) {
 
       <li className="project-item">
         <Card className="project-item__content">
+          {isLoading && <LoadingSpinner asOverlay />}
           <div className="project-item__info">
             <h2>{props.title}</h2>
             <h4>Lead: {props.lead}</h4>
             <p>Description: {props.description}</p>
           </div>
           <div className="project-item__actions">
-            <Button to={`/projects/${props.id}`}>UPDATE</Button>
-            <Button danger onClick={showArchiveWarningHandler}>
-              ARCHIVE
-            </Button>
+            {auth.isLoggedIn && (
+              <Button to={`/projects/${props.id}`}>UPDATE</Button>
+            )}
+            {auth.isLoggedIn && (
+              <Button danger onClick={showArchiveWarningHandler}>
+                ARCHIVE
+              </Button>
+            )}
           </div>
         </Card>
       </li>

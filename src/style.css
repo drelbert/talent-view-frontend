@@ -4,3 +4,62 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #272829;
 }
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.one {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  background-color: #61dafb;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.two {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  background-color: #61dafb;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.three {
+  grid-column: 1 / 3;
+  grid-row: 2 / 6;
+  background-color: #61dafb;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.four {
+  grid-column: 3 / 4;
+  grid-row: 3 / 5;
+  background-color: #61dafb;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+/* .row {
+  display: flex;
+  flex: 0 1 auto;
+  flex-flow: row wrap;
+  justify-content: left;
+} */
+
+/* .item {
+  display: flex;
+  flex-flow: row wrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow: hidden;
+  margin: 1rem;
+  width: calc(50% - 2rem);
+  min-width: 17.5rem;
+  background-color: #61dafb;
+} */

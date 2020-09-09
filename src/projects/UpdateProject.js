@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useParams } from "@reach/router";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, navigate } from "@reach/router";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import {
@@ -7,31 +7,18 @@ import {
   VALIDATOR_MINLENGTH,
 } from "../shared/utilities/validators";
 import { useForm } from "../shared/hooks/form";
+import { useHttpClient } from "../shared/hooks/http-hook";
+import { AuthContext } from "../shared/context/auth-context";
 import Card from "../shared/Card";
+import LoadingSpinner from "../shared/LoadingSpinner";
+import ErrorModal from "../shared/ErrorModal";
 import "./Projects.css";
-import "../shared/Shared.css";
-
-var TEMP_PROJECTS = [
-  {
-    id: "temp100",
-    title: "Death Star UX Refresh",
-    description: "Modernize weapons app with a user centric design.",
-    lead: "Ingra",
-    creatorId: "all805",
-    team: "SB",
-  },
-  {
-    id: "temp200",
-    title: "Entertainment App for the Falcon",
-    description:
-      "Allow pilots and passengers to access and control content in flight.",
-    lead: "Magnus",
-    creatorId: "101",
-    team: "DC",
-  },
-];
 
 const UpdateProject = function () {
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedProject, setLoadedProject] = useState();
+
   const projectId = useParams().projectId;
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -48,33 +35,62 @@ const UpdateProject = function () {
     false
   );
 
-  const projectToUpdate = TEMP_PROJECTS.find((p) => p.id === projectId);
-
+  // function to send the request and fetch the data
   useEffect(() => {
-    if (projectToUpdate) {
-      setFormData(
-        {
-          description: {
-            value: projectToUpdate.description,
-            isValid: true,
+    const fetchProject = async () => {
+      // catching errors
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/projects/${projectId}`
+        );
+        setLoadedProject(responseData.project);
+        setFormData(
+          {
+            description: {
+              value: responseData.description,
+              isValid: true,
+            },
+            lead: {
+              value: responseData.lead,
+              isValid: true,
+            },
           },
-          lead: {
-            value: projectToUpdate.lead,
-            isValid: true,
-          },
-        },
-        true
-      );
-    }
-  }, [setFormData, projectToUpdate]);
+          true
+        );
+        // eslint-disable-next-line no-empty
+      } catch (err) {}
+    };
+    fetchProject();
+  }, [sendRequest, projectId, setFormData]);
 
-  const projectUpdateSubmitHandler = (event) => {
+  const projectUpdateSubmitHandler = async (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(formState.inputs);
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/projects/${projectId}`,
+        "PATCH",
+        JSON.stringify({
+          description: formState.inputs.description.value,
+          lead: formState.inputs.lead.value,
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+      navigate("/" + auth.userId + "/projects");
+      // eslint-disable-next-line no-empty
+    } catch (err) {}
   };
 
-  if (!projectToUpdate) {
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!loadedProject && !error) {
     return (
       <div className="center">
         <Card>
@@ -84,40 +100,37 @@ const UpdateProject = function () {
     );
   }
 
-  if (!formState.inputs.description.value) {
-    return (
-      <div className="center">
-        <h2>Loading...</h2>
-      </div>
-    );
-  }
-
   return (
-    <form className="project-form" onSubmit={projectUpdateSubmitHandler}>
-      <Input
-        id="description"
-        element="textarea"
-        label="Description"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter required description"
-        onInput={inputHandler}
-        initialValue={formState.inputs.description.value}
-        initialValid={formState.inputs.description.isValid}
-      />
-      <Input
-        id="lead"
-        element="input"
-        label="Lead"
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter required lead"
-        onInput={inputHandler}
-        initialValue={formState.inputs.lead.value}
-        initialValid={formState.inputs.lead.isValid}
-      />
-      <Button type="submit" disabled={!formState.isValid}>
-        UPDATE PROJECT
-      </Button>
-    </form>
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {!isLoading && loadedProject && (
+        <form className="project-form" onSubmit={projectUpdateSubmitHandler}>
+          <Input
+            id="description"
+            element="textarea"
+            label="Description"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter required description"
+            onInput={inputHandler}
+            initialValue={loadedProject.description}
+            initialValid={true}
+          />
+          <Input
+            id="lead"
+            element="input"
+            label="Lead"
+            validators={[VALIDATOR_MINLENGTH(5)]}
+            errorText="Please enter required lead"
+            onInput={inputHandler}
+            initialValue={loadedProject.lead}
+            initialValid={true}
+          />
+          <Button type="submit" disabled={!formState.isValid}>
+            UPDATE PROJECT
+          </Button>
+        </form>
+      )}
+    </React.Fragment>
   );
 };
 

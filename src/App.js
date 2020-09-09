@@ -13,14 +13,17 @@ import { AuthContext } from "./shared/context/auth-context";
 const App = () => {
   // adding a new state, then initialize with useState
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
 
   // login/logout functions wrapped with useCallback to limit re-creation
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   }, []);
 
   let routes;
@@ -30,10 +33,10 @@ const App = () => {
       <Router>
         <Data path="/" />
         <Users path="/users" />
-        <UserProjects path="/:id/projects" />
+        <UserProjects path="/:userId/projects" />
         <Projects path="/projects" />
         <UpdateProject path="/projects/:projectId" />
-        <Redirect from="/auth" to="/" />
+        <Redirect from="/auth" to="/" noThrow />
       </Router>
     );
   } else {
@@ -41,7 +44,7 @@ const App = () => {
       <Router>
         <Data path="/" />
         <Auth path="/auth" />
-        <Redirect from="/auth" to="/auth" />
+        <Redirect from="/" to="/auth" />
       </Router>
     );
   }
@@ -50,7 +53,12 @@ const App = () => {
   return (
     <div>
       <AuthContext.Provider
-        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+        value={{
+          isLoggedIn: isLoggedIn,
+          userId: userId,
+          login: login,
+          logout: logout,
+        }}
       >
         <MainHeader />
         <main>{routes}</main>

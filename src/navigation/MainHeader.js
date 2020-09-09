@@ -22,7 +22,7 @@ const MainHeader = function () {
           )}
           {auth.isLoggedIn && (
             <Link to="/projects">
-              <li className="nav-links">Projects</li>
+              <li className="nav-links">Add Project</li>
             </Link>
           )}
           {!auth.isLoggedIn && (
@@ -31,9 +31,11 @@ const MainHeader = function () {
             </Link>
           )}
           {auth.isLoggedIn && (
-            <li>
-              <button onClick={auth.logout}>Logout</button>
-            </li>
+            <Link to="/auth">
+              <li>
+                <button onClick={auth.logout}>Logout</button>
+              </li>
+            </Link>
           )}
         </ul>
       </nav>
@@ -42,3 +44,5 @@ const MainHeader = function () {
 };
 
 export default MainHeader;
+
+// {`/${auth.userId}/projects `}

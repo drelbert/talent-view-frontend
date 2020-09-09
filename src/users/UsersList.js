@@ -4,7 +4,7 @@ import Card from "../shared/Card";
 import "./Users.css";
 
 function UserList(props) {
-  if (props.elements.length == 0) {
+  if (props.items.length == 0) {
     return (
       <div className="center">
         <Card>
@@ -16,16 +16,14 @@ function UserList(props) {
 
   return (
     <ul className="users-list">
-      {props.elements.map((user) => {
+      {props.items.map((user) => {
         return (
           <User
             key={user.id}
             id={user.id}
             image={user.image}
             name={user.name}
-            position={user.position}
-            team={user.team}
-            projects={user.projects}
+            projects={user.projects.length}
           />
         );
       })}

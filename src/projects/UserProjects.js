@@ -1,36 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "@reach/router";
 import ProjectList from "./ProjectList";
+import ErrorModal from "../shared/ErrorModal";
+import LoadingSpinner from "../shared/LoadingSpinner";
+import { useHttpClient } from "../shared/hooks/http-hook";
+import "./Projects.css";
 
-var TEMP_PROJECTS = [
-  {
-    id: "temp100",
-    title: "Death Star UX Refresh",
-    description: "Modernize weapons app with a user centric design.",
-    lead: "Ingra",
-    creatorId: "all805",
-    team: "SB",
-  },
-  {
-    id: "temp200",
-    title: "Entertainment App for the Falcon",
-    description:
-      "Allow pilots and passengers to access and control content in flight.",
-    lead: "Magnus",
-    creatorId: "101",
-    team: "DC",
-  },
-];
+// const TEMP_PROJECTS = [
+//   {
+//     title: "App Name",
+//     lead: "Sonja",
+//     description: "Description details",
+//     creator: "5f2996b58ee5360933f7389b",
+//   },
+// ];
+
 const UserProjects = function () {
-  let id = useParams().id;
-  let loadedProjects = TEMP_PROJECTS.filter(
-    (project) => project.creatorId === id
-  );
+  const [loadedProjects, setLoadedProjects] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const userId = useParams().userId;
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/projects/user/${userId}`
+        );
+        setLoadedProjects(responseData.projects);
+        // eslint-disable-next-line no-empty
+      } catch (err) {}
+    };
+    fetchProjects();
+  }, [sendRequest, userId]);
+
+  const projectDeletedHandler = (deletedProjectId) => {
+    setLoadedProjects((updatedProjects) =>
+      updatedProjects.filter((project) => project.id !== deletedProjectId)
+    );
+  };
 
   return (
-    <div>
-      <ProjectList elements={loadedProjects} />;
-    </div>
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && loadedProjects && (
+        <ProjectList
+          items={loadedProjects}
+          onDeleteProject={projectDeletedHandler}
+        />
+      )}
+    </React.Fragment>
   );
 };
 

@@ -60,68 +60,6 @@
   font-size: 1.5rem;
 }
 
-.button {
-  font: inherit;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid #ff0055;
-  border-radius: 4px;
-  background: #ff0055;
-  color: white;
-  cursor: pointer;
-  margin-right: 1rem;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.button:focus {
-  outline: none;
-}
-
-.button:hover,
-.button:active {
-  background: #ff4382;
-  border-color: #ff4382;
-}
-
-.button--inverse {
-  background: transparent;
-  color: #ff0055;
-}
-
-.button--inverse:hover,
-.button--inverse:active {
-  color: white;
-  background: #ff0055;
-}
-
-.button--danger {
-  background: #830000;
-  border-color: #830000;
-}
-
-.button--danger:hover,
-.button--danger:active {
-  background: #f34343;
-  border-color: #f34343;
-}
-
-.button:disabled,
-.button:hover:disabled,
-.button:active:disabled {
-  background: #ccc;
-  color: #979797;
-  border-color: #ccc;
-  cursor: not-allowed;
-}
-
-.button--small {
-  font-size: 0.8rem;
-}
-
-.button--big {
-  font-size: 1.5rem;
-}
-
 .lds-dual-ring {
   display: inline-block;
   width: 64px;
@@ -177,7 +115,7 @@
   top: 22vh;
   left: 10%;
   width: 80%;
-  background: white;
+  background: #292929;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
 }
@@ -185,8 +123,8 @@
 .modal__header {
   width: 100%;
   padding: 1rem 0.5rem;
-  background: #2a006e;
-  color: white;
+  /* background: #2a006e; */
+  color: #61dafb;
 }
 
 .modal__header h2 {
@@ -195,6 +133,7 @@
 
 .modal__content {
   padding: 1rem 0.5rem;
+  color: #4aa9c4;
 }
 
 .modal__footer {
@@ -292,4 +231,67 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
   background: #979797;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #510077;
+  border-color: #510077 transparent #510077 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.loading-spinner__overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.image-upload.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image-upload__preview {
+  width: 13rem;
+  height: 13rem;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.image-upload__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
