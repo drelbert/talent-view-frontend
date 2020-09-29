@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
+// function to manage data parsing and state management logic
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();

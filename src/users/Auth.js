@@ -93,6 +93,7 @@ const Auth = function Auth() {
             "Content-Type": "application/json",
           }
         );
+        // was user.id
         auth.login(responseData.user.id);
       } catch (err) {}
     } else {
@@ -107,8 +108,8 @@ const Auth = function Auth() {
           "POST",
           formData
         );
-
-        auth.login(responseData.user.id);
+        // was user.id
+        auth.login(responseData.userId);
       } catch (err) {}
     }
     //console.log(formState.inputs);

@@ -4,7 +4,7 @@ import { Router, Redirect } from "@reach/router";
 import Data from "./Data";
 import MainHeader from "./navigation/MainHeader";
 import Users from "./users/Users";
-import Projects from "./projects/Projects";
+import NewProject from "./projects/NewProject";
 import UserProjects from "./projects/UserProjects";
 import UpdateProject from "./projects/UpdateProject";
 import Auth from "./users/Auth";
@@ -34,7 +34,7 @@ const App = () => {
         <Data path="/" />
         <Users path="/users" />
         <UserProjects path="/:userId/projects" />
-        <Projects path="/projects" />
+        <NewProject path="/projects/new" />
         <UpdateProject path="/projects/:projectId" />
         <Redirect from="/auth" to="/" noThrow />
       </Router>

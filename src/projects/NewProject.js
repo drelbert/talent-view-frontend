@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Input from "../shared/Input";
+// import { useNavigate } from "@reach/router";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -47,7 +48,7 @@ const NewProject = function () {
         }),
         { "Content-Type": "application/json" }
       );
-      // TODO redirect to a diff page
+      // Will redirect to a diff page
       // eslint-disable-next-line no-empty
     } catch (err) {}
   };
