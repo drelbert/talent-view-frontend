@@ -21,7 +21,7 @@ const MainHeader = function () {
             </Link>
           )}
           {auth.isLoggedIn && (
-            <Link to="/projects/new">
+            <Link to="/projects">
               <li className="nav-links">Add Project</li>
             </Link>
           )}

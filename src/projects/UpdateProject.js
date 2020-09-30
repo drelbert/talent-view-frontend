@@ -18,7 +18,6 @@ const UpdateProject = function () {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedProject, setLoadedProject] = useState();
-
   const projectId = useParams().projectId;
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -47,11 +46,11 @@ const UpdateProject = function () {
         setFormData(
           {
             description: {
-              value: responseData.description,
+              value: responseData.project.description,
               isValid: true,
             },
             lead: {
-              value: responseData.lead,
+              value: responseData.project.lead,
               isValid: true,
             },
           },

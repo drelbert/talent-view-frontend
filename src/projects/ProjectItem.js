@@ -52,7 +52,7 @@ const ProjectItem = function (props) {
           </React.Fragment>
         }
       >
-        <p>This can be undone, but it is tons of work. Are you sure?</p>
+        <p>This cannot be undone. Are you sure?</p>
       </Modal>
 
       <li className="project-item">
@@ -64,10 +64,10 @@ const ProjectItem = function (props) {
             <p>Description: {props.description}</p>
           </div>
           <div className="project-item__actions">
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button to={`/projects/${props.id}`}>UPDATE</Button>
             )}
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button danger onClick={showArchiveWarningHandler}>
                 ARCHIVE
               </Button>

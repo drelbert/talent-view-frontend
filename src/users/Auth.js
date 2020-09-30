@@ -78,7 +78,7 @@ const Auth = function Auth() {
     event.preventDefault();
 
     // eslint-disable-next-line no-console
-    console.log(formState.inputs);
+    // console.log(formState.inputs);
 
     if (isLoginMode) {
       try {
@@ -93,7 +93,8 @@ const Auth = function Auth() {
             "Content-Type": "application/json",
           }
         );
-        // was user.id
+        // was userId
+        // when userId is used below, user cannot add projects
         auth.login(responseData.user.id);
       } catch (err) {}
     } else {
@@ -108,8 +109,8 @@ const Auth = function Auth() {
           "POST",
           formData
         );
-        // was user.id
-        auth.login(responseData.userId);
+        // was userId
+        auth.login(responseData.user.id);
       } catch (err) {}
     }
     //console.log(formState.inputs);

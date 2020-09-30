@@ -60,6 +60,7 @@ const NewProject = function () {
         <div className="row">
           <form className="project-form" onSubmit={projectAddHandler}>
             {isLoading && <LoadingSpinner asOverlay />}
+            <h3>New Project</h3>
             <Input
               id="title"
               element="input"
