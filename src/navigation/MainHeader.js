@@ -22,7 +22,7 @@ const MainHeader = function () {
           )}
           {auth.isLoggedIn && (
             <Link to="/projects">
-              <li className="nav-links">Add Project</li>
+              <li className="nav-links">Projects</li>
             </Link>
           )}
           {!auth.isLoggedIn && (

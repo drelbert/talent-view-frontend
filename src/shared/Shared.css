@@ -198,7 +198,7 @@
 .form-control textarea {
   width: 100%;
   font: inherit;
-  border: 1px solid #ccc;
+  border: 1px solid #61dafb;
   background: #f8f8f8;
   padding: 0.15rem 0.25rem;
 }
@@ -207,7 +207,7 @@
 .form-control textarea:focus {
   outline: none;
   background: #ebebeb;
-  border-color: #510077;
+  border-color: #61dafb;
 }
 
 .form-control--invalid label,

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import Input from "../shared/Input";
-// import { useNavigate } from "@reach/router";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -48,7 +47,6 @@ const NewProject = function () {
         }),
         { "Content-Type": "application/json" }
       );
-      // Will redirect to a diff page
       // eslint-disable-next-line no-empty
     } catch (err) {}
   };
@@ -56,8 +54,8 @@ const NewProject = function () {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <div className="wrapper">
-        <div className="row">
+      <div>
+        <div>
           <form className="project-form" onSubmit={projectAddHandler}>
             {isLoading && <LoadingSpinner asOverlay />}
             <h3>New Project</h3>

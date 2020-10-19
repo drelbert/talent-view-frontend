@@ -22,6 +22,10 @@ const UpdateProject = function () {
 
   const [formState, inputHandler, setFormData] = useForm(
     {
+      title: {
+        value: "",
+        isValid: false,
+      },
       description: {
         value: "",
         isValid: false,
@@ -45,6 +49,10 @@ const UpdateProject = function () {
         setLoadedProject(responseData.project);
         setFormData(
           {
+            title: {
+              value: responseData.project.title,
+              isValid: true,
+            },
             description: {
               value: responseData.project.description,
               isValid: true,
@@ -69,6 +77,7 @@ const UpdateProject = function () {
         `http://localhost:5000/api/projects/${projectId}`,
         "PATCH",
         JSON.stringify({
+          title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           lead: formState.inputs.lead.value,
         }),
@@ -104,6 +113,16 @@ const UpdateProject = function () {
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && loadedProject && (
         <form className="project-form" onSubmit={projectUpdateSubmitHandler}>
+          <Input
+            id="title"
+            element="textarea"
+            label="Title"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter required title"
+            onInput={inputHandler}
+            initialValue={loadedProject.title}
+            initialValid={true}
+          />
           <Input
             id="description"
             element="textarea"

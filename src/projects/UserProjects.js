@@ -6,15 +6,6 @@ import LoadingSpinner from "../shared/LoadingSpinner";
 import { useHttpClient } from "../shared/hooks/http-hook";
 import "./Projects.css";
 
-// const TEMP_PROJECTS = [
-//   {
-//     title: "App Name",
-//     lead: "Sonja",
-//     description: "Description details",
-//     creator: "5f2996b58ee5360933f7389b",
-//   },
-// ];
-
 const UserProjects = function () {
   const [loadedProjects, setLoadedProjects] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();

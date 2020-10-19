@@ -1,5 +1,6 @@
 import React from "react";
 import SearchParams from "./SearchParams";
+import UserProjectsAll from "./projects/UserProjectsAll";
 import "./style.css";
 
 const Data = function () {
@@ -16,8 +17,8 @@ const Data = function () {
       </div>
 
       <div className="three">
-        <h1>Data View 3</h1>
-        <SearchParams />
+        <h1>Current Projects</h1>
+        <UserProjectsAll />
       </div>
 
       <div className="four">

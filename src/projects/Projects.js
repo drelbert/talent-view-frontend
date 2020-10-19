@@ -1,12 +1,20 @@
 import React from "react";
 import NewProject from "./NewProject";
+import UserProjectsAll from "./UserProjectsAll";
 import "./Projects.css";
 
 const Projects = function () {
   return (
-    <div>
-      <NewProject />
-    </div>
+    <React.Fragment>
+      <div className="wrapper">
+        <div className="one">
+          <NewProject />
+        </div>
+        <div className="two">
+          <UserProjectsAll />
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
