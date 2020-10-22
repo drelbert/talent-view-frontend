@@ -94,8 +94,7 @@ const Auth = function Auth() {
           }
         );
         // was userId
-        // when userId is used below, user cannot add projects
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (err) {}
     } else {
       try {
@@ -110,7 +109,7 @@ const Auth = function Auth() {
           formData
         );
         // was userId
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (err) {}
     }
     //console.log(formState.inputs);

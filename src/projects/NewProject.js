@@ -32,7 +32,7 @@ const NewProject = function () {
     },
     false
   );
-
+  // updated function to remove  "new FromData"
   const projectAddHandler = async (event) => {
     event.preventDefault();
     try {
